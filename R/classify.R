@@ -183,7 +183,8 @@ classify <- function(
                       " --val_info ", data_info,
                       " --delimiter ", delimiter,
                       #" --save_predictions ", paste0(wd, "\\", save_predictions),
-                      " --save_predictions ", paste0(wd, "/", save_predictions),
+                      #" --save_predictions ", paste0(wd, "/", save_predictions),
+                      " --save_predictions ", paste0(output_location, "/", save_predictions),
                       " --top_n ", top_n,
                       " --num_gpus ", num_gpus,
                       " --num_classes ", num_classes, 
@@ -199,7 +200,8 @@ classify <- function(
                       " --batch_size ", batch_size, 
                       " --val_info ", data_info,
                       " --delimiter ", delimiter,
-                      " --save_predictions ", paste0(wd, "/", save_predictions),
+                      #" --save_predictions ", paste0(wd, "/", save_predictions),
+                      " --save_predictions ", paste0(output_location, "/", save_predictions),
                       " --top_n ", top_n,
                       " --num_gpus ", num_gpus,
                       " --num_classes ", num_classes, 
@@ -224,9 +226,9 @@ classify <- function(
   
   # end function
   if(make_output==FALSE){
-    if(file.exists(paste0(wd, "/", save_predictions))){
+    if(file.exists(paste0(output_location, "/", save_predictions))){
       txt <- paste0("running the classify function took ", runtime, " ", units(runtime), ". ", "\n",
-                    "The results are stored in ", model_dir, "/", save_predictions, ". ", "\n",
+                    "The results are stored in ", output_location, "/", save_predictions, ". ", "\n",
                     "To view the results in a viewer-friendly format, please use the function make_output", "\n"
                     )
       if(print_cmd == FALSE){
@@ -240,7 +242,7 @@ classify <- function(
   # make output in this function too
   if(make_output){
     if(file.exists(paste0(wd, "/", save_predictions))){
-      out <- utils::read.csv(paste0(wd, "/", save_predictions), header=FALSE)
+      out <- utils::read.csv(paste0(output_location, "/", save_predictions), header=FALSE)
       # set new column names
       colnames(out) <- c("rowNumber", "fileName", "answer", paste0("guess", 1:top_n), 
                          paste0("confidence", 1:top_n))
